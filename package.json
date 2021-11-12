@@ -1,0 +1,14 @@
+{
+  "name": "article-reading-files-via-javascript",
+  "version": "1.0.0",
+  "description": "Code supporting the article on reading files via JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "lite-server --baseDir='src'"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
