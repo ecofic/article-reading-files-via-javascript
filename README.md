@@ -30,3 +30,5 @@ These repositories sped up the development of this sample code.
 |----------------------------------------|-------------------------------------------------|------------------------------------------------------------------|
 | [Bootstrap](https://getbootstrap.com/) | [view](https://github.com/twbs/bootstrap)       | [MIT](https://github.com/twbs/bootstrap/blob/main/LICENSE)       |
 | lite-server                            | [view](https://github.com/johnpapa/lite-server) | [MIT](https://github.com/johnpapa/lite-server/blob/main/LICENSE) |
+
+Thank you. 👍
