@@ -22,6 +22,14 @@ NOTE: I've experienced some caching issues. To work beyond this, you may need to
 
 Now that you're up and running with this code, I want to close out by giving some shoutouts.
 
+## Tour
+This repository includes the following directories:
+
+| Directory           | Purpose                                                                                         |
+|---------------------|-------------------------------------------------------------------------------------------------|
+| [`files`](./files/) | Files used in conjustion with the examples found in the `src` directory. These files are empty. |
+| [`src`](./src/)     | The source code used in this app.                                                               |
+
 ## Special Thanks
 This repository relies on code from the following repositories.
 These repositories sped up the development of this sample code.
