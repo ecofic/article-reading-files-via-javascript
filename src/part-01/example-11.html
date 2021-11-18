@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Part 1 Examples: Example 11</title>
+    </head>
+
+    <body>
+        <div id="mondayReceiptsSurface" ondragover="onReceiptDraggedOver(event)" ondrop="onReceiptDropped(event)">
+            Drop receipts for Monday's expenses here.        
+        </div>
+        
+        <script type="text/javascript">
+            function onReceiptDraggedOver(e) {
+                e.preventDefault();                 // Prevent the browser from opening the file
+            }
+
+            function onReceiptDropped(e) {
+                e.preventDefault();                 // Prevent the browser from opening the file
+            }
+        </script>
+    </body>
+</html>
