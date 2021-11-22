@@ -103,5 +103,4 @@ dist
 # TernJS port file
 .tern-port
 
-src/receipts.html
-src/part-01/drag-and-drop.html
+src/tests/
