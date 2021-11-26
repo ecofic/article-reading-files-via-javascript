@@ -10,11 +10,13 @@
         </form>
 
         <script type="text/javascript">
+            const receiptFilesInput = document.getElementById('receiptFilesInput');
+
             function onReceiptsSelected() {
                 const files = receiptFilesInput.files;
                 const file = files[0];
 
-                const message = `File '${file.name}' is a ${file.type} with ${file.size} and was last modified on ${file.lastModified} `;
+                const message = `File '${file.name}' is a ${file.type} with ${file.size} bytes and was last modified on ${file.lastModified} `;
                 console.log(message);
             }
         </script>
