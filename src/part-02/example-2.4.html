@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Part 2 Examples: Example 3</title>
+        <title>Part 2 Examples: Example 4</title>
     </head>
 
     <body>
         <form>
             <input id="receiptFilesInput" type="file" onchange="onReceiptsSelected()" />
+            <br />
+            <img id="receiptPreviewImage" />
         </form>
 
         <script type="text/JavaScript">
             const receiptFilesInput = document.getElementById('receiptFilesInput');
+            const receiptPreviewImage = document.getElementById('receiptPreviewImage');
 
             function onReceiptsSelected() {
                 const files = receiptFilesInput.files;
                 if (files.length > 0) {
                     const reader = new FileReader();
                     reader.onloadend = (e) => {
-                        console.log(e.target.result);
+                        receiptPreviewImage.src = e.target.result;
                     };
-                    reader.readAsText(files[0], 'ISO-8859-2');
+                    reader.readAsDataURL(files[0]);
                 }
             }
         </script>
