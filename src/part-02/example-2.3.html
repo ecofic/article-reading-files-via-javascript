@@ -16,7 +16,7 @@
                 const files = receiptFilesInput.files;
                 if (files.length > 0) {
                     const reader = new FileReader();
-                    reader.onloadend = (e) => {
+                    reader.onload = (e) => {
                         console.log(e.target.result);
                     };
                     reader.readAsText(files[0], 'ISO-8859-2');
