@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Part 3 Examples: Example 1</title>
+    </head>
+
+    <body>
+        <form>
+            <input id="receiptFilesInput" type="file" multiple onchange="onReceiptsSelected()" />
+        </form>
+
+        <script type="text/javascript">
+            const receiptFilesInput = document.getElementById('receiptFilesInput');
+
+            function onReceiptsSelected() {
+                const receipts = receiptFilesInput.files;
+                if (receipts.length > 0) {
+                    for (let i=0; i<receipts.length; i++) {
+                        const receipt = receipts[i];
+                        readReceipt(receipt);
+                    }
+                }
+            }
+
+            function readReceipt(receipt) {
+                const reader = new FileReader();
+                reader.onloadstart = (e) => {
+                    console.log(`'${receipt.name}' loadstart: ${e.loaded} of ${e.total} bytes loaded.`);
+                };
+
+                reader.onprogress = (e) => {
+                    const completed = parseInt((e.loaded / e.total) * 100);
+                    console.log(`'${receipt.name}' progress: ${e.loaded} of ${e.total} bytes loaded. (${completed}% completed)`);
+                };
+
+                reader.onload = (e) => {
+                    console.log(`'${receipt.name}' load: ${e.loaded} of ${e.total} bytes loaded.`);
+                };
+
+                reader.onloadend = (e) => {
+                    console.log(` '${receipt.name}' loadend: ${e.loaded} of ${e.total} bytes loaded.`);
+                };
+
+                reader.readAsArrayBuffer(receipt);
+            }
+        </script>
+    </body>
+</html>

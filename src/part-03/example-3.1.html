@@ -13,29 +13,30 @@
             const receiptFilesInput = document.getElementById('receiptFilesInput');
 
             function onReceiptsSelected() {
-                const files = receiptFilesInput.files;
-                if (files.length > 0) {
-                    const reader = new FileReader();
-
-                    reader.onloadstart = (e) => {
-                        console.log(`loadstart: ${e.loaded} of ${e.total} loaded. Progress can be measured: ${e.lengthComputable}`);
-                        console.log(e);
-                    };
-
-                    reader.onload = (e) => {
-                        console.log(`load: ${e.loaded} of ${e.total} loaded. Progress can be measured: ${e.lengthComputable}`);
-                        console.log(e);
-                    };
-
-                    reader.onloadend = (e) => {
-                        console.log(`loadend: ${e.loaded} of ${e.total} loaded. Progress can be measured: ${e.lengthComputable}`);
-                        console.log(e);
-                    };
-
-                    for (let i=0; i<files.length; i++) {
-                        reader.readAsArrayBuffer(files[i]);
+                const receipts = receiptFilesInput.files;
+                if (receipts.length > 0) {
+                    for (let i=0; i<receipts.length; i++) {
+                        const receipt = receipts[i];
+                        readReceipt(receipt);
                     }
                 }
+            }
+
+            function readReceipt(receipt) {
+                const reader = new FileReader();
+                reader.onloadstart = (e) => {
+                    console.log(`'${receipt.name}' loadstart: ${e.loaded} of ${e.total} bytes loaded. Progress can be measured: ${e.lengthComputable}`);
+                };
+
+                reader.onload = (e) => {
+                    console.log(`'${receipt.name}' load: ${e.loaded} of ${e.total} bytes loaded. Progress can be measured: ${e.lengthComputable}`);
+                };
+
+                reader.onloadend = (e) => {
+                    console.log(` '${receipt.name}' loadend: ${e.loaded} of ${e.total} bytes loaded. Progress can be measured: ${e.lengthComputable}`);
+                };
+
+                reader.readAsArrayBuffer(receipt);
             }
         </script>
     </body>
