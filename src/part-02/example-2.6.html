@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Part 2 Examples: Example 6</title>
+    </head>
+
+    <body>
+        <form>
+            <input id="receiptFilesInput" type="file" multiple onchange="onReceiptsSelected()" />
+        </form>
+
+        <script type="text/JavaScript">
+            const receiptFilesInput = document.getElementById('receiptFilesInput');
+
+            const reader = new FileReader();
+            reader.onloadend = (e) => {
+                const loadSucceeded = (e.error === undefined) ? true : false;
+                console.log(`Receipt '${currentReceipt.name}' successfully loaded: ${loadSucceeded}`);
+
+                receiptIndex = receiptIndex + 1;
+                readReceipt(receiptIndex);
+            };
+
+            let receipts = null;
+            let receiptIndex = 0;
+            let currentReceipt = null;
+
+            function readReceipt(fileIndex) {
+                if (fileIndex >= receipts.length) {
+                    return;
+                }
+
+                currentReceipt = receipts[receiptIndex];
+                reader.readAsText(currentReceipt);     // This could be readAsArrayBuffer or readAsDataURL
+            }
+
+            function onReceiptsSelected() {
+                receipts = receiptFilesInput.files;                
+                if (receipts.length > 0) {
+                    readReceipt(0);
+                }
+            }
+        </script>
+    </body>
+</html>

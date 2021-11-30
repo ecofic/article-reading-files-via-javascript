@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Part 3 Examples: Example 1</title>
+    </head>
+
+    <body>
+        <form>
+            <input id="receiptFilesInput" type="file" multiple onchange="onReceiptsSelected()" />
+        </form>
+
+        <script type="text/javascript">
+            const receiptFilesInput = document.getElementById('receiptFilesInput');
+
+            function onReceiptsSelected() {
+                const files = receiptFilesInput.files;
+                if (files.length > 0) {
+                    const reader = new FileReader();
+
+                    reader.onloadstart = (e) => {
+                        console.log(`loadstart: ${e.loaded} of ${e.total} loaded. Progress can be measured: ${e.lengthComputable}`);
+                        console.log(e);
+                    };
+
+                    reader.onload = (e) => {
+                        console.log(`load: ${e.loaded} of ${e.total} loaded. Progress can be measured: ${e.lengthComputable}`);
+                        console.log(e);
+                    };
+
+                    reader.onloadend = (e) => {
+                        console.log(`loadend: ${e.loaded} of ${e.total} loaded. Progress can be measured: ${e.lengthComputable}`);
+                        console.log(e);
+                    };
+
+                    for (let i=0; i<files.length; i++) {
+                        reader.readAsArrayBuffer(files[i]);
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
