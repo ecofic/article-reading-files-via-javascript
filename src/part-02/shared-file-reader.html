@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Example with Shared FileReader</title>
+    </head>
+
+    <body>
+        <form>
+            <input id="receiptFilesInput" type="file" multiple onchange="onReceiptsSelected()" />
+        </form>
+
+        <script type="text/javascript">
+            const receiptFilesInput = document.getElementById('receiptFilesInput');
+
+            let receipts = [];
+            let receiptsRead = [];
+            let currentReceipt = null;
+
+            const receiptReader = new FileReader();
+            receiptReader.onloadend = (e) => {
+                const loadSucceeded = (e.error === undefined) ? true : false;
+                console.log(`${currentReceipt.name}: ${e.loaded} of ${e.total} loaded. success: ${loadSucceeded}`);
+
+                receiptsRead.push(currentReceipt);
+                readNextReceipt();
+            };
+
+            function onReceiptsSelected()
+            {
+                receipts = receiptFilesInput.files;
+                receiptsRead = [];
+
+                console.log('Reading receipts...');
+                readNextReceipt();
+            }
+
+            function readNextReceipt()
+            {
+                if (receiptsRead.length < receipts.length) {
+                    currentReceipt = receipts[receiptsRead.length];
+                    receiptReader.readAsArrayBuffer(currentReceipt);
+                } else {
+                    console.log('All receipts have been read.');
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -42,7 +42,7 @@
 
                     receiptsRead.push(receipt);
                     if (receiptsRead.length === receipts.length) {
-                        console.log('All files have been read.');
+                        console.log('All receipts have been read.');
                         if (receiptInterval) {
                             clearInterval(receiptInterval);
                         }
@@ -52,7 +52,7 @@
             }
 
             function readReceiptsSequentially() {
-                console.log('Reading files sequentially...');
+                console.log('Reading receipts sequentially...');
                 receiptInterval = setInterval(() => {
                     const receipt = receipts[receiptsRead.length];
                     readReceipt(receipt, receiptsRead.length);
@@ -60,7 +60,7 @@
             }
 
             function readReceiptsSimultaneously() {
-                console.log('Reading files simultaneously...');
+                console.log('Reading receipts simultaneously...');
                 for (let i=0; i<receipts.length; i++) {
                     const receipt = receipts[i];
                     readReceipt(receipt, i);
