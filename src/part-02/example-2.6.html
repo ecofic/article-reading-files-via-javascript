@@ -6,38 +6,64 @@
 
     <body>
         <form>
-            <input id="receiptFilesInput" type="file" multiple onchange="onReceiptsSelected()" />
+            <input id="receiptFilesInput" type="file" multiple />
+            <br /><br />
+            <button onclick="return onReadReceiptsClick(true)">Read Sequentially</button>
+            <button onclick="return onReadReceiptsClick(false)">Read Simultaneously</button>
         </form>
 
-        <script type="text/JavaScript">
+        <script type="text/javascript">
             const receiptFilesInput = document.getElementById('receiptFilesInput');
-
-            const reader = new FileReader();
-            reader.onloadend = (e) => {
-                const loadSucceeded = (e.error === undefined) ? true : false;
-                console.log(`Receipt '${currentReceipt.name}' successfully loaded: ${loadSucceeded}`);
-
-                receiptIndex = receiptIndex + 1;
-                readReceipt(receiptIndex);
-            };
+            let receiptInterval = null;
 
             let receipts = null;
-            let receiptIndex = 0;
-            let currentReceipt = null;
+            let receiptsRead = [];
 
-            function readReceipt(fileIndex) {
-                if (fileIndex >= receipts.length) {
-                    return;
+            function onReadReceiptsClick(inOrder)
+            {
+                receipts = receiptFilesInput.files;
+                receiptsRead = [];
+
+                if (receipts.length > 0) {
+                    if (inOrder) {
+                        readReceiptsSequentially();
+                    } else {
+                        readReceiptsSimultaneously();
+                    }
                 }
-
-                currentReceipt = receipts[receiptIndex];
-                reader.readAsText(currentReceipt);     // This could be readAsArrayBuffer or readAsDataURL
+                return false;
             }
 
-            function onReceiptsSelected() {
-                receipts = receiptFilesInput.files;                
-                if (receipts.length > 0) {
-                    readReceipt(0);
+            function readReceipt(receipt, receiptIndex) {
+                const reader = new FileReader();
+                reader.onloadend = (e) => {
+                    const loadSucceeded = (e.error === undefined) ? true : false;
+                    console.log(`${receipt.name}: ${e.loaded} of ${e.total} loaded. success: ${loadSucceeded}`);
+
+                    receiptsRead.push(receipt);
+                    if (receiptsRead.length === receipts.length) {
+                        console.log('All files have been read.');
+                        if (receiptInterval) {
+                            clearInterval(receiptInterval);
+                        }
+                    }
+                };
+                reader.readAsArrayBuffer(receipt);
+            }
+
+            function readReceiptsSequentially() {
+                console.log('Reading files sequentially...');
+                receiptInterval = setInterval(() => {
+                    const receipt = receipts[receiptsRead.length];
+                    readReceipt(receipt, receiptsRead.length);
+                }, 50);
+            }
+
+            function readReceiptsSimultaneously() {
+                console.log('Reading files simultaneously...');
+                for (let i=0; i<receipts.length; i++) {
+                    const receipt = receipts[i];
+                    readReceipt(receipt, i);
                 }
             }
         </script>
