@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Part 3 Examples: Example 2</title>
+        <title>Part 3 Examples: Example 3</title>
     </head>
 
     <body>
         <form>
             <input id="receiptFilesInput" type="file" multiple onchange="onReceiptsSelected()" />
+            <br />
+            <button onclick="return onReadClick()">Read Receipt</button>
         </form>
 
         <script type="text/javascript">
             const receiptFilesInput = document.getElementById('receiptFilesInput');
+            let selectedReceipt = null;
 
             function onReceiptsSelected() {
                 const receipts = receiptFilesInput.files;
                 if (receipts.length > 0) {
-                    for (let i=0; i<receipts.length; i++) {
-                        const receipt = receipts[i];
-                        readReceipt(receipt);
-                    }
+                    selectedReceipt = receipts[0];
                 }
+            }
+
+            // NOTE: You should delete or remove the file before clicking the "Read Receipt" if you want to trigger the read receipt button.
+            function onReadClick() {
+                if (selectedReceipt) {
+                    readReceipt(selectedReceipt);
+                }
+                return false;
             }
 
             function readReceipt(receipt) {
@@ -33,6 +41,12 @@
                     console.log(`'${receipt.name}' progress: ${e.loaded} of ${e.total} bytes loaded. (${completed}% completed)`);
                 };
 
+                reader.onerror = (e) => {
+                    const error = reader.error;
+                    console.log(error);
+                    console.log(`'${receipt.name}' error: ${error.name} - ${error.message}`);
+                };
+
                 reader.onload = (e) => {
                     console.log(`'${receipt.name}' load: ${e.loaded} of ${e.total} bytes loaded.`);
                 };
@@ -41,7 +55,7 @@
                     console.log(`'${receipt.name}' loadend: ${e.loaded} of ${e.total} bytes loaded.`);
                 };
 
-                reader.readAsArrayBuffer(receipt);
+                reader.readAsDataURL(receipt);
             }
         </script>
     </body>

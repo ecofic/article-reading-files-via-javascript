@@ -33,7 +33,7 @@
                 };
 
                 reader.onloadend = (e) => {
-                    console.log(` '${receipt.name}' loadend: ${e.loaded} of ${e.total} bytes loaded. Progress can be measured: ${e.lengthComputable}`);
+                    console.log(`'${receipt.name}' loadend: ${e.loaded} of ${e.total} bytes loaded. Progress can be measured: ${e.lengthComputable}`);
                 };
 
                 reader.readAsArrayBuffer(receipt);
